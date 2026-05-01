@@ -7,7 +7,16 @@ This repository outlines a purely algebraic method to find and verify prime numb
 
 ---
 
-## 1. The Origin of the Discovery
+## 1. Academic Context and Mathematical Equivalency
+While this algorithm was independently derived, it is important to place it within the context of established number theory. 
+
+* **Relation to the Sieve of Sundaram:** The Jadhav Sieve functions as an independent, algebraic derivation of the Sieve of Sundaram (1934). While Sundaram applied his exclusion logic to the `2n + 1` sequence, this algorithm natively optimizes the logic by applying it exclusively to the `6n ± 1` sequence.
+* **Relation to Wheel Factorization:** By isolating the `6n ± 1` format, this algebraic filter inherently utilizes a modulo-6 wheel factorization, bypassing multiples of 2 and 3 at the foundational level.
+* **Trial Division vs. Rational Functions:** Computationally, the rearranged `y`-solving shortcuts presented in this algorithm operate at the same time-complexity as standard trial division. However, its theoretical value lies in its algebraic translation: it maps the arithmetic process of trial division into a set of rational functions, evaluating primality based purely on whether the variables map to the set of integers (Z). 
+
+---
+
+## 2. The Origin of the Discovery
 The foundation of this sieve began with an original mathematical observation regarding the distribution of prime numbers. It is a known fundamental rule that every prime number greater than 3 must take the form of:
 
 **p = 6n ± 1**
@@ -22,7 +31,7 @@ This original formula successfully and elegantly filtered out all perfect square
 
 ---
 
-## 2. The Complete Algebraic Rules
+## 3. The Complete Algebraic Rules
 To generalize the original discovery to catch all composite numbers, we must account for multiplying two different primes: `(6x ± 1)` and `(6y ± 1)`, where `x` and `y` are natural numbers. 
 
 By expanding these multiplications, we get our final, 100% accurate exclusion rules. 
@@ -40,7 +49,7 @@ It will yield a prime number 100% of the time as long as:
 
 ---
 
-## 3. How to Use the Formula Manually (The Shortcuts)
+## 4. How to Use the Formula Manually (The Shortcuts)
 If you are testing a massive number, checking every possible combination of `x` and `y` is inefficient. To use this formula rapidly by hand, we apply two optimization shortcuts:
 
 **Shortcut 1 (The Square Root Limit):** You only ever need to test `x` up to the square root boundary. If a composite is going to form, at least one of its factors will be found before this limit:
@@ -59,14 +68,14 @@ If you are testing a massive number, checking every possible combination of `x` 
 
 ---
 
-## 4. Simultaneous Prime Factorization (The Hidden Feature)
+## 5. Simultaneous Prime Factorization (The Hidden Feature)
 Unlike standard primality tests that only return `True` or `False`, this algebraic sieve simultaneously computes the exact prime factors of any composite number it catches. 
 
 Because we are solving for `x` and `y`, the moment `y` results in a whole number, we have uncovered the variables used to construct the composite. We simply plug `x` and `y` back into the base prime formulas `(6x ± 1)` and `(6y ± 1)` based on which rearranged rule triggered the integer.
 
 ---
 
-## 5. Step-by-Step Examples
+## 6. Step-by-Step Examples
 
 ### Example 1: Proving a Prime (Is 211 prime?)
 **Step 1: Find n:** 211 = 6(35) + 1. Because it is a `+ 1`, our `n = 35`.
@@ -77,7 +86,6 @@ Because we are solving for `x` and `y`, the moment `y` results in a whole number
 **Result:** Because we reached our limit and `y` never resulted in a whole integer, the exclusion rules are not triggered. **211 is mathematically proven to be prime.**
 
 ### Example 2: Factorizing a Composite (What are the factors of 10001?)
-At first glance, 10001 looks prime. Let's use the sieve.
 **Step 1: Find n:** 10001 = 6(1667) - 1. Because it is a `- 1`, our `n = 1667`.
 **Step 2: Find Limit:** x_max = √(1667 / 6) ≈ 16.6. We only test `x` up to 16.
 **Step 3: Test the 6n - 1 rearranged rules:**
