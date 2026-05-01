@@ -47,6 +47,16 @@ It will yield a prime number 100% of the time as long as:
 
 *(Note: If x = y, these generalized rules perfectly collapse back into my original 2k(3k ± 1) formula, proving the foundational logic).*
 
+### Proof of Completeness (Theorem of Equivalence)
+By the Fundamental Theorem of Arithmetic, every integer > 1 is either prime or a product of primes. Because all primes `p > 3` strictly take the form of `6k ± 1`, any composite `C` not divisible by 2 or 3 must be the product of at least two factors taking the form `6x ± 1` and `6y ± 1`.
+
+When we multiply these factors, there are exactly three distinct parity combinations:
+1. **Positive Parity:** `(6x + 1)(6y + 1) = 6(6xy + x + y) + 1`
+2. **Negative Parity:** `(6x - 1)(6y - 1) = 6(6xy - x - y) + 1`
+3. **Opposite Parity:** `(6x + 1)(6y - 1) = 6(6xy - x + y) - 1`
+
+Because there are no other parity combinations for primes greater than 3, this algebraic mapping is exhaustive and bijective. No composite `C` in the `6n ± 1` sequence can exist without perfectly satisfying one of these exclusion rules for `n`.
+
 ---
 
 ## 4. How to Use the Formula Manually (The Shortcuts)
