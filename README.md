@@ -3,7 +3,7 @@
 **An independent mathematical derivation by Ishaan Dnyaneshwar Jadhav.**
 **Contact:** [ishaanjadhav1905@gmail.com](mailto:ishaanjadhav1905@gmail.com)
 
-This repository outlines a purely algebraic method to find and verify prime numbers deterministically, without relying on brute-force trial division. By manipulating the fundamental properties of prime distribution, this algorithm filters out composite numbers using strict algebraic exclusion rules.
+This repository outlines a purely algebraic method to find and verify prime numbers deterministically, without relying on brute-force trial division. By manipulating the fundamental properties of prime distribution, this algorithm filters out composite numbers using strict algebraic exclusion rules, and simultaneously acts as an exact prime factorization tool.
 
 ---
 
@@ -50,32 +50,50 @@ If you are testing a massive number, checking every possible combination of `x` 
 **Shortcut 2 (Solve for y):** Instead of guessing `x` and `y`, we rearrange the exclusion rules to solve for `y`. If we plug in an `x` value and `y` outputs a perfect whole number (integer), the number is instantly proven composite.
 
 **Rearranged 6n + 1 Rules:**
-* `y = (n - x) / (6x + 1)` 
-* `y = (n + x) / (6x - 1)`
+* Rule 1: `y = (n - x) / (6x + 1)` 
+* Rule 2: `y = (n + x) / (6x - 1)`
 
 **Rearranged 6n - 1 Rules:**
-* `y = (n + x) / (6x + 1)` 
-* `y = (n - x) / (6x - 1)`
+* Rule 3: `y = (n + x) / (6x + 1)` 
+* Rule 4: `y = (n - x) / (6x - 1)`
 
 ---
 
-## 4. Step-by-Step Manual Example (Is 211 prime?)
+## 4. Simultaneous Prime Factorization (The Hidden Feature)
+Unlike standard primality tests that only return `True` or `False`, this algebraic sieve simultaneously computes the exact prime factors of any composite number it catches. 
 
-**Step 1: Find n**
-211 = 6(35) + 1. Because it is a `+ 1`, our `n = 35`.
+Because we are solving for `x` and `y`, the moment `y` results in a whole number, we have uncovered the variables used to construct the composite. We simply plug `x` and `y` back into the base prime formulas `(6x ± 1)` and `(6y ± 1)` based on which rearranged rule triggered the integer.
 
-**Step 2: Find Limit**
-x_max = √(35 / 6) ≈ 2.4. We only need to test `x = 1` and `x = 2`.
+---
 
-**Step 3: Test the 6n + 1 rearranged rules**
+## 5. Step-by-Step Examples
+
+### Example 1: Proving a Prime (Is 211 prime?)
+**Step 1: Find n:** 211 = 6(35) + 1. Because it is a `+ 1`, our `n = 35`.
+**Step 2: Find Limit:** x_max = √(35 / 6) ≈ 2.4. We only need to test `x = 1` and `x = 2`.
+**Step 3: Test the 6n + 1 rearranged rules:**
 * If `x = 1`: `y = 34 / 7` or `y = 36 / 5` (Neither is a whole number).
 * If `x = 2`: `y = 33 / 13` or `y = 37 / 11` (Neither is a whole number).
-
 **Result:** Because we reached our limit and `y` never resulted in a whole integer, the exclusion rules are not triggered. **211 is mathematically proven to be prime.**
+
+### Example 2: Factorizing a Composite (What are the factors of 10001?)
+At first glance, 10001 looks prime. Let's use the sieve.
+**Step 1: Find n:** 10001 = 6(1667) - 1. Because it is a `- 1`, our `n = 1667`.
+**Step 2: Find Limit:** x_max = √(1667 / 6) ≈ 16.6. We only test `x` up to 16.
+**Step 3: Test the 6n - 1 rearranged rules:**
+* We skip ahead and test `x = 12` using Rule 3: `y = (n + x) / (6x + 1)`
+* `y = (1667 + 12) / (6(12) + 1)`
+* `y = 1679 / 73`
+* **y = 23** (A perfect whole number!)
+**Result:** 10001 is immediately proven composite. 
+**The Factorization:** Because Rule 3 triggered, we look at its denominator `(6x + 1)`. 
+* Factor 1: `6x + 1` -> `6(12) + 1` = **73**
+* Factor 2: `6y - 1` -> `6(23) - 1` = **137**
+**The Sieve has proven that 73 × 137 = 10001.**
 
 ---
 
 ## Authorship
-The initial algebraic observation `n ≠ 2k(3k ± 1)`, the subsequent mathematical generalization, and the associated Python implementation were independently derived and developed by **Ishaan Dnyaneshwar Jadhav**. 
+The initial algebraic observation `n ≠ 2k(3k ± 1)`, the subsequent mathematical generalization, the optimization methodologies, and the associated codebase were independently derived and developed by **Ishaan Dnyaneshwar Jadhav**. 
 
 If you utilize this specific mathematical breakdown, derivation story, or codebase in your own projects, educational materials, or research, please provide clear attribution to this repository.
